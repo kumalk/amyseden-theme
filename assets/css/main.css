@@ -5055,6 +5055,455 @@ body:has(.announcement-bar) .hero {
         rgba(20, 20, 35, 0.7) 100%);
 }
 
+/* ==========================================================================
+   32. ASSISTED LIVING — Hero with mobile/desktop bg + BEM styling
+   Uses the homepage hero__* classes for consistent white-on-dark look.
+   ========================================================================== */
+.hero--al {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-top: calc(var(--nav-height, 80px) + var(--announcement-offset, 0px) + 40px);
+    padding-bottom: 60px;
+}
+
+.hero--al .hero__bg-picture {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block;
+}
+
+.hero--al .hero__bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Dark gradient overlay, matching homepage hero */
+.hero--al .hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg,
+        rgba(20, 20, 35, 0.45) 0%,
+        rgba(20, 20, 35, 0.55) 40%,
+        rgba(20, 20, 35, 0.75) 100%);
+}
+
+.hero--al .hero__content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    max-width: 900px;
+    padding: 0 24px;
+    margin: 0 auto;
+    color: #fff;
+}
+
+/* Location line under subtitle */
+.hero--al .hero__location {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.92rem;
+    margin: 0 auto 32px;
+    animation: fadeInUp 1s ease 0.7s both;
+}
+
+.hero--al .hero__location .amyseden-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--gold, #D4A853);
+    flex-shrink: 0;
+}
+
+/* Stats row (3 items) */
+.hero--al .hero__stats {
+    display: flex;
+    justify-content: center;
+    gap: 64px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+    animation: fadeInUp 1s ease 0.9s both;
+}
+
+.hero--al .hero__stat {
+    text-align: center;
+}
+
+.hero--al .hero__stat-value {
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
+}
+
+.hero--al .hero__stat-label {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.72);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    max-width: 160px;
+    margin: 0 auto;
+    line-height: 1.4;
+}
+
+/* Gold call button variant for dark hero */
+.hero--al .btn-outline--light {
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hero--al .btn-outline--light:hover {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--coral);
+    border-color: #fff;
+}
+
+.hero--al .btn-outline--light .amyseden-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Hero CTA buttons layout */
+.hero--al .hero__ctas {
+    justify-content: center;
+    margin-bottom: 0;
+    animation: fadeInUp 1s ease 0.8s both;
+}
+
+/* Badge SVG uses gold fill like homepage */
+.hero--al .hero__badge .amyseden-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--gold, #D4A853);
+    fill: var(--gold, #D4A853);
+    flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero--al {
+        min-height: 80vh;
+        padding-top: calc(var(--nav-height, 80px) + var(--announcement-offset, 0px) + 30px);
+    }
+    .hero--al .hero__stats {
+        gap: 28px;
+        margin-top: 32px;
+    }
+    .hero--al .hero__stat-value { font-size: 1.6rem; }
+    .hero--al .hero__stat-label { font-size: 0.68rem; letter-spacing: 1px; }
+    .hero--al .hero__ctas {
+        flex-direction: column;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto 16px;
+    }
+    .hero--al .hero__ctas .btn { width: 100%; justify-content: center; }
+}
+
+/* ==========================================================================
+   33. ASSISTED LIVING — Included cards with SVG icons
+   ========================================================================== */
+.included-card .included-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--gradient-soft);
+    color: var(--coral);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.included-card .included-icon .amyseden-icon {
+    width: 26px;
+    height: 26px;
+}
+
+.included-card:hover .included-icon {
+    transform: scale(1.08) rotate(-3deg);
+}
+
+/* Base card styling to match other sections */
+.included-card {
+    background: var(--bg-white);
+    padding: 32px 28px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.included-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+.included-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.included-card p {
+    font-size: 0.93rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin: 0;
+}
+
+.included-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   34. ASSISTED LIVING — Tab features with SVG checkmarks
+   ========================================================================== */
+.tab-features {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.tab-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.tab-features li .amyseden-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--coral);
+    flex-shrink: 0;
+    margin-top: 3px;
+    stroke-width: 2.5;
+}
+
+/* Pricing features use same treatment */
+.pricing-features {
+    list-style: none;
+    margin: 20px 0;
+    padding: 0;
+}
+
+.pricing-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.pricing-features li .amyseden-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--coral);
+    flex-shrink: 0;
+    margin-top: 3px;
+    stroke-width: 2.5;
+}
+
+/* ==========================================================================
+   35. ASSISTED LIVING — Compare table SVG badges
+   ========================================================================== */
+.compare-table .check,
+.compare-table .x {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.compare-table .check {
+    color: #1f7a1f;
+    font-weight: 600;
+}
+
+.compare-table .x {
+    color: #b02a37;
+}
+
+.compare-table .check .amyseden-icon {
+    width: 16px;
+    height: 16px;
+    color: #1f7a1f;
+    flex-shrink: 0;
+}
+
+.compare-table .x .amyseden-icon {
+    width: 16px;
+    height: 16px;
+    color: #b02a37;
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   36. ASSISTED LIVING — Testimonial SVG stars
+   ========================================================================== */
+.testimonial-stars {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+}
+
+.testimonial-stars .amyseden-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--gold, #D4A853);
+}
+
+/* ==========================================================================
+   37. ASSISTED LIVING — FAQ chevron toggle
+   ========================================================================== */
+.faq-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--gradient-soft);
+    color: var(--coral);
+    transition: transform 0.3s ease, background 0.3s ease;
+    flex-shrink: 0;
+}
+
+.faq-toggle .amyseden-icon {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2.5;
+    transition: transform 0.3s ease;
+}
+
+.faq-item.open .faq-toggle,
+.faq-item.active .faq-toggle {
+    background: var(--gradient);
+    color: #fff;
+}
+
+.faq-item.open .faq-toggle .amyseden-icon,
+.faq-item.active .faq-toggle .amyseden-icon {
+    transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   38. ASSISTED LIVING — Contact info SVG icons
+   ========================================================================== */
+.contact-info {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+}
+
+.contact-info-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.contact-info-item .amyseden-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--coral);
+    flex-shrink: 0;
+}
+
+/* Tour section — hero has background image inline from Customizer */
+.tour-section .tour-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+
+.tour-section .tour-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(20, 20, 35, 0.7), rgba(20, 20, 35, 0.85));
+}
+
+.tour-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.tour-section .tour-content {
+    text-align: center;
+    color: #fff;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.tour-section .tour-content h2 {
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    margin: 12px 0 16px;
+}
+
+.tour-section .tour-content p {
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.7;
+    margin-bottom: 28px;
+}
+
+.tour-photos {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.tour-photos img {
+    width: 150px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Icon utility class */
+.amyseden-icon {
+    display: inline-block;
+    vertical-align: middle;
+}
+
 /* --- Home Care --- */
 .page-home-care .hero {
     min-height: 88vh;
