@@ -1,0 +1,42 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.sublime-*
+
+# Logs & temp files
+*.log
+*.tmp
+*.bak
+*.orig
+
+# Node / build artifacts (in case you add tooling later)
+node_modules/
+npm-debug.log
+yarn-error.log
+.env
+.env.local
+
+# PHP
+vendor/
+*.phar
+
+# WordPress (should never end up in a theme repo)
+wp-config.php
+*.sql
+*.sql.gz
+uploads/
+cache/
+
+# Misc
+Thumbs.db
+.directory
