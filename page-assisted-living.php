@@ -217,6 +217,7 @@ $con_image    = get_theme_mod('amyseden_al_con_image', 'https://amyseden.com/wp-
                 </div>
             <?php endforeach; ?>
         </div>
+        <?php echo amyseden_trust_badges('hero'); ?>
     </div>
 </section>
 

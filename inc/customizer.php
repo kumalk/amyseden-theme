@@ -1447,6 +1447,102 @@ function amyseden_customize_register($wp_customize) {
     ));
 
     // ============================================================
+    // 11b. TRUST SIGNALS (Google rating + BBB)
+    // ============================================================
+    $wp_customize->add_section('amyseden_trust_signals', array(
+        'title' => __('Trust Signals (Google / BBB)', 'amyseden'),
+        'priority' => 58,
+        'description' => __('Displayed in the footer and in hero trust bars across key landing pages.', 'amyseden'),
+    ));
+
+    // Global enable
+    $wp_customize->add_setting('amyseden_trust_enabled', array(
+        'default' => true,
+        'sanitize_callback' => 'wp_validate_boolean',
+    ));
+    $wp_customize->add_control('amyseden_trust_enabled', array(
+        'label' => __('Show Trust Signals', 'amyseden'),
+        'section' => 'amyseden_trust_signals',
+        'type' => 'checkbox',
+    ));
+
+    // Google
+    $wp_customize->add_setting('amyseden_trust_google_show', array(
+        'default' => true,
+        'sanitize_callback' => 'wp_validate_boolean',
+    ));
+    $wp_customize->add_control('amyseden_trust_google_show', array(
+        'label' => __('Show Google Rating', 'amyseden'),
+        'section' => 'amyseden_trust_signals',
+        'type' => 'checkbox',
+    ));
+    $wp_customize->add_setting('amyseden_trust_google_rating', array(
+        'default' => '4.4',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('amyseden_trust_google_rating', array(
+        'label' => __('Google Rating (e.g. 4.4)', 'amyseden'),
+        'section' => 'amyseden_trust_signals',
+        'type' => 'text',
+    ));
+    $wp_customize->add_setting('amyseden_trust_google_count', array(
+        'default' => '120+ reviews',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('amyseden_trust_google_count', array(
+        'label' => __('Google Review Count Text', 'amyseden'),
+        'section' => 'amyseden_trust_signals',
+        'type' => 'text',
+    ));
+    $wp_customize->add_setting('amyseden_trust_google_url', array(
+        'default' => 'https://g.co/kgs/amyseden',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('amyseden_trust_google_url', array(
+        'label' => __('Google Reviews URL', 'amyseden'),
+        'section' => 'amyseden_trust_signals',
+        'type' => 'url',
+    ));
+
+    // BBB
+    $wp_customize->add_setting('amyseden_trust_bbb_show', array(
+        'default' => true,
+        'sanitize_callback' => 'wp_validate_boolean',
+    ));
+    $wp_customize->add_control('amyseden_trust_bbb_show', array(
+        'label' => __('Show BBB Rating', 'amyseden'),
+        'section' => 'amyseden_trust_signals',
+        'type' => 'checkbox',
+    ));
+    $wp_customize->add_setting('amyseden_trust_bbb_rating', array(
+        'default' => 'A+',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('amyseden_trust_bbb_rating', array(
+        'label' => __('BBB Rating (e.g. A+)', 'amyseden'),
+        'section' => 'amyseden_trust_signals',
+        'type' => 'text',
+    ));
+    $wp_customize->add_setting('amyseden_trust_bbb_label', array(
+        'default' => 'BBB Accredited',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('amyseden_trust_bbb_label', array(
+        'label' => __('BBB Label Text', 'amyseden'),
+        'section' => 'amyseden_trust_signals',
+        'type' => 'text',
+    ));
+    $wp_customize->add_setting('amyseden_trust_bbb_url', array(
+        'default' => 'https://www.bbb.org/',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control('amyseden_trust_bbb_url', array(
+        'label' => __('BBB Profile URL', 'amyseden'),
+        'section' => 'amyseden_trust_signals',
+        'type' => 'url',
+    ));
+
+    // ============================================================
     // 12. FORMS & NOTIFICATIONS (Slack webhook, spam settings)
     // ============================================================
     $wp_customize->add_section('amyseden_forms', array(

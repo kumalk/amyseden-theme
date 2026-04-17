@@ -263,6 +263,7 @@ $fc_bg       = get_theme_mod('amyseden_hc_fc_bg', 'https://amyseden.com/wp-conte
                 <?php echo esc_html($hc_hero_cta2_text); ?>
             </a>
         </div>
+        <?php echo amyseden_trust_badges('hero'); ?>
     </div>
 </section>
 

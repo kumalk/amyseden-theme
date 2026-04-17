@@ -141,6 +141,7 @@ if (!$use_theme_footer && function_exists('elementor_theme_do_location') && elem
                     </div>
                 </div>
             </div>
+            <?php echo amyseden_trust_badges('footer'); ?>
             <div class="footer__bottom">
                 <span class="footer__copy">&copy; <?php echo date('Y'); ?> <?php echo esc_html($footer_copyright); ?></span>
                 <span class="footer__legal"><?php echo esc_html($footer_legal); ?></span>

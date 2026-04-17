@@ -32,6 +32,7 @@ $hero_bg_mobile_x = get_theme_mod('amyseden_home_hero_bg_mobile_x', 'center');
                 <a href="<?php echo esc_url($hero_cta1_url); ?>" class="btn btn-primary"><?php echo esc_html($hero_cta1_text); ?></a>
                 <a href="tel:<?php echo esc_attr($phone_raw); ?>" class="btn btn-outline--light">Call <?php echo esc_html($phone); ?></a>
             </div>
+            <?php echo amyseden_trust_badges('hero'); ?>
         </div>
         <div class="hero__scroll">
             <span>Scroll</span>
