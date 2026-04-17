@@ -622,9 +622,7 @@ $fc_bg       = get_theme_mod('amyseden_hc_fc_bg', 'https://amyseden.com/wp-conte
 <section class="final-cta">
     <div class="container">
         <div class="final-cta-inner reveal">
-            <div class="final-cta-bg">
-                <img src="<?php echo esc_url($fc_bg); ?>" alt="" loading="lazy" aria-hidden="true">
-            </div>
+            <div class="final-cta-bg" style="background-image: url('<?php echo esc_url($fc_bg); ?>');"></div>
             <span class="section-label"><?php echo esc_html($fc_label); ?></span>
             <h2><?php echo esc_html($fc_heading); ?></h2>
             <p><?php echo esc_html($fc_subtitle); ?></p>
