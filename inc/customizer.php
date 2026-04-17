@@ -986,25 +986,236 @@ function amyseden_customize_register($wp_customize) {
         'panel' => 'amyseden_home_care',
     ));
 
-    $amyseden_add_image($wp_customize, 'amyseden_hc_hero_bg', 'Hero Background Image', 'https://amyseden.com/wp-content/uploads/2025/04/Hero.png', 'amyseden_hc_hero');
-    $hc_hero_fields = array(
-        'amyseden_hc_hero_badge' => array('Hero Badge Text', 'In-Home Care Services', 'text'),
-        'amyseden_hc_hero_heading' => array('Hero Heading', 'Premium In-Home Care', 'text'),
-        'amyseden_hc_hero_accent' => array('Hero Heading Accent Text', 'That Comes to You', 'text'),
-        'amyseden_hc_hero_subtitle' => array('Hero Subtitle', 'Professional, compassionate caregivers providing personalized care in the comfort of your own home — serving Reno & Carson City.', 'textarea'),
-    );
+    // Use the $add_al helper (generic — works for any panel)
+    $add_hc = $add_al;
 
-    foreach ($hc_hero_fields as $id => $field) {
-        $wp_customize->add_setting($id, array(
-            'default' => $field[1],
-            'sanitize_callback' => $field[2] === 'textarea' ? 'sanitize_textarea_field' : 'sanitize_text_field',
-        ));
-        $wp_customize->add_control($id, array(
-            'label' => __($field[0], 'amyseden'),
-            'section' => 'amyseden_hc_hero',
-            'type' => $field[2],
-        ));
+    // Hero
+    $add_hc($wp_customize, 'amyseden_hc_hero_bg',         'Hero Background — Desktop', 'https://amyseden.com/wp-content/uploads/2025/04/Hero.png', 'image', 'amyseden_hc_hero');
+    $add_hc($wp_customize, 'amyseden_hc_hero_bg_mobile',  'Hero Background — Mobile',  'https://amyseden.com/wp-content/uploads/2025/04/Hero.png', 'image', 'amyseden_hc_hero');
+    $add_hc($wp_customize, 'amyseden_hc_hero_badge',      'Hero Badge Text',            'In-Home Care Services', 'text', 'amyseden_hc_hero');
+    $add_hc($wp_customize, 'amyseden_hc_hero_heading',    'Hero Heading',               'Premium In-Home Care', 'text', 'amyseden_hc_hero');
+    $add_hc($wp_customize, 'amyseden_hc_hero_accent',     'Hero Heading Accent Text',   'That Comes to You', 'text', 'amyseden_hc_hero');
+    $add_hc($wp_customize, 'amyseden_hc_hero_subtitle',   'Hero Subtitle',              'Professional, compassionate caregivers providing personalized care in the comfort of your own home — serving Reno & Carson City.', 'textarea', 'amyseden_hc_hero');
+    $add_hc($wp_customize, 'amyseden_hc_hero_cta1_text',  'Primary Button Text',        'Get Started Today', 'text', 'amyseden_hc_hero');
+    $add_hc($wp_customize, 'amyseden_hc_hero_cta1_url',   'Primary Button URL',         '#contact', 'text', 'amyseden_hc_hero');
+    $add_hc($wp_customize, 'amyseden_hc_hero_cta2_text',  'Secondary Button Text',      'Call (775) 884-3336', 'text', 'amyseden_hc_hero');
+
+    // Trust bar (4 stats)
+    $wp_customize->add_section('amyseden_hc_trust', array('title' => __('Trust Bar', 'amyseden'), 'panel' => 'amyseden_home_care'));
+    $trust_defaults = array(
+        1 => array('13+',  'Years of Care'),
+        2 => array('12',   'Licensed Homes'),
+        3 => array('24/7', 'Availability'),
+        4 => array('100%', 'Personalized Plans'),
+    );
+    foreach ($trust_defaults as $i => $d) {
+        $add_hc($wp_customize, "amyseden_hc_trust{$i}_number", "Stat {$i} — Number", $d[0], 'text', 'amyseden_hc_trust');
+        $add_hc($wp_customize, "amyseden_hc_trust{$i}_label",  "Stat {$i} — Label",  $d[1], 'text', 'amyseden_hc_trust');
     }
+
+    // Overview section
+    $wp_customize->add_section('amyseden_hc_ov', array('title' => __('Overview Section', 'amyseden'), 'panel' => 'amyseden_home_care'));
+    $add_hc($wp_customize, 'amyseden_hc_ov_label',        'Label',   'About Our Home Care', 'text', 'amyseden_hc_ov');
+    $add_hc($wp_customize, 'amyseden_hc_ov_heading',      'Heading', 'Compassionate Care in the Comfort of Home', 'text', 'amyseden_hc_ov');
+    $add_hc($wp_customize, 'amyseden_hc_ov_p1',           'Paragraph 1', "At Amy's Eden, we believe everyone deserves to age with dignity in the place they feel most comfortable — home. Our professional caregivers bring warmth, expertise, and genuine compassion directly to your door.", 'textarea', 'amyseden_hc_ov');
+    $add_hc($wp_customize, 'amyseden_hc_ov_p2',           'Paragraph 2', 'Whether your loved one needs a few hours of help each week or comprehensive daily support, our personalized approach ensures they receive exactly the care they need, exactly when they need it.', 'textarea', 'amyseden_hc_ov');
+    $add_hc($wp_customize, 'amyseden_hc_ov_image',        'Main Image',   'https://amyseden.com/wp-content/uploads/2025/06/In-Home-Care-Amys-Eden.webp', 'image', 'amyseden_hc_ov');
+    $add_hc($wp_customize, 'amyseden_hc_ov_image_accent', 'Accent Image', 'https://amyseden.com/wp-content/uploads/2025/06/in-home-care-2.webp', 'image', 'amyseden_hc_ov');
+    $add_hc($wp_customize, 'amyseden_hc_ov_cta_text',     'CTA Button Text', 'Schedule a Free Assessment', 'text', 'amyseden_hc_ov');
+    $add_hc($wp_customize, 'amyseden_hc_ov_cta_url',      'CTA Button URL',  '#contact', 'text', 'amyseden_hc_ov');
+
+    // Why Us (6 USP cards)
+    $wp_customize->add_section('amyseden_hc_why', array(
+        'title' => __('Why Choose Us Section', 'amyseden'),
+        'panel' => 'amyseden_home_care',
+        'description' => __('Icon slugs: users, clipboard, clock, pill, smile, activity, heart, hands, home, shield, palette, music, sparkles, check, phone, location, mail.', 'amyseden'),
+    ));
+    $add_hc($wp_customize, 'amyseden_hc_why_label',    'Label',    'Why Choose Us', 'text', 'amyseden_hc_why');
+    $add_hc($wp_customize, 'amyseden_hc_why_heading',  'Heading',  "Why Amy's Eden Home Care", 'text', 'amyseden_hc_why');
+    $add_hc($wp_customize, 'amyseden_hc_why_subtitle', 'Subtitle', "Our caregivers are more than qualified — they're compassionate professionals who treat your loved ones like family.", 'textarea', 'amyseden_hc_why');
+    $add_hc($wp_customize, 'amyseden_hc_why_photo',    'Side Photo', 'https://amyseden.com/wp-content/uploads/2025/06/Untitled-design-23-1.webp', 'image', 'amyseden_hc_why');
+    $usp_defaults = array(
+        1 => array('users',     'Trained & Vetted Caregivers',   'Every caregiver undergoes rigorous background checks, training, and ongoing education to deliver the highest standard of care.'),
+        2 => array('clipboard', 'Personalized Care Plans',       'No two clients are alike. We create customized care plans tailored to your loved one\'s unique needs, preferences, and routines.'),
+        3 => array('clock',     'Flexible Scheduling',           'From a few hours a week to full-time 24/7 care, we offer flexible scheduling options that adapt as your needs change.'),
+        4 => array('pill',      'Medication Management',         'We ensure medications are taken correctly and on time, coordinating with physicians and pharmacies for seamless management.'),
+        5 => array('smile',     'Companion Care & Activities',   'Beyond physical care, we provide meaningful companionship, engaging activities, and social interaction to enhance quality of life.'),
+        6 => array('activity',  'Coordination with Medical Teams','We work directly with your loved one\'s doctors, therapists, and specialists to ensure a cohesive, comprehensive approach to care.'),
+    );
+    foreach ($usp_defaults as $i => $d) {
+        $add_hc($wp_customize, "amyseden_hc_usp{$i}_icon",  "Card {$i} — Icon Slug",  $d[0], 'text',     'amyseden_hc_why');
+        $add_hc($wp_customize, "amyseden_hc_usp{$i}_title", "Card {$i} — Title",      $d[1], 'text',     'amyseden_hc_why');
+        $add_hc($wp_customize, "amyseden_hc_usp{$i}_desc",  "Card {$i} — Description",$d[2], 'textarea', 'amyseden_hc_why');
+    }
+
+    // Photo strip (3 photos)
+    $wp_customize->add_section('amyseden_hc_strip', array('title' => __('Photo Strip', 'amyseden'), 'panel' => 'amyseden_home_care'));
+    $strip_defs = array(
+        'https://amyseden.com/wp-content/uploads/2025/07/Frame-56.png',
+        'https://amyseden.com/wp-content/uploads/2025/07/Frame-57.png',
+        'https://amyseden.com/wp-content/uploads/2025/07/Frame-58.png',
+    );
+    for ($i = 1; $i <= 3; $i++) {
+        $add_hc($wp_customize, "amyseden_hc_strip{$i}", "Photo {$i}", $strip_defs[$i - 1], 'image', 'amyseden_hc_strip');
+    }
+
+    // Services (10 cards + feature row)
+    $wp_customize->add_section('amyseden_hc_sv', array(
+        'title' => __('Services Section', 'amyseden'),
+        'panel' => 'amyseden_home_care',
+        'description' => __('Icon slugs: hands, heart, pill, meal, sparkles, location, shield, check-circle, activity, caregiver, users, clipboard, phone, home.', 'amyseden'),
+    ));
+    $add_hc($wp_customize, 'amyseden_hc_sv_label',         'Label',    'Our Services', 'text', 'amyseden_hc_sv');
+    $add_hc($wp_customize, 'amyseden_hc_sv_heading',       'Heading',  'Comprehensive Home Care Services', 'text', 'amyseden_hc_sv');
+    $add_hc($wp_customize, 'amyseden_hc_sv_subtitle',      'Subtitle', 'From daily personal care to specialized medical support, we provide the full spectrum of in-home care services.', 'textarea', 'amyseden_hc_sv');
+    $add_hc($wp_customize, 'amyseden_hc_sv_feature_image','Feature Image',  'https://amyseden.com/wp-content/uploads/2023/08/pillr-page-image-1-web.png', 'image', 'amyseden_hc_sv');
+    $add_hc($wp_customize, 'amyseden_hc_sv_feature_label','Feature Label',  'Tailored to You', 'text', 'amyseden_hc_sv');
+    $add_hc($wp_customize, 'amyseden_hc_sv_feature_heading','Feature Heading','Every Service, Personalized to Your Family', 'text', 'amyseden_hc_sv');
+    $add_hc($wp_customize, 'amyseden_hc_sv_feature_text', 'Feature Body', "We don't believe in one-size-fits-all care. Each service we provide is customized around your loved one's unique needs, preferences, daily routines, and health goals. From the first assessment to ongoing care, everything is built around them.", 'textarea', 'amyseden_hc_sv');
+    $sv_defaults = array(
+        1  => array('hands',       'Personal Care',                 'Dignified assistance with bathing, grooming, dressing, and mobility to maintain comfort and independence.'),
+        2  => array('heart',       'Companion Care',                'Meaningful conversation, engaging activities, and accompanied outings to prevent isolation and bring joy.'),
+        3  => array('pill',        'Medication Management',         'Accurate medication reminders, administration, and coordination with healthcare providers.'),
+        4  => array('meal',        'Meal Preparation & Nutrition',  'Nutritious, home-cooked meals prepared to dietary needs and personal preferences.'),
+        5  => array('sparkles',    'Light Housekeeping & Laundry',  'Maintaining a clean, safe, and comfortable home environment including laundry, dishes, and tidying.'),
+        6  => array('location',    'Transportation & Errands',      'Safe transportation to appointments, social events, shopping, and other errands.'),
+        7  => array('shield',      'Respite Care',                  'Giving family caregivers well-deserved breaks while ensuring your loved one is in expert hands.'),
+        8  => array('check-circle','Post-Surgery & Rehabilitation', 'Specialized support during recovery, following care plans from surgeons and therapists.'),
+        9  => array('activity',    'Chronic Disease Management',    'Ongoing support for diabetes, heart conditions, COPD, and other chronic conditions.'),
+        10 => array('caregiver',   'Hospice Support Care',          'Compassionate support for end-of-life care, working alongside hospice teams to provide comfort and dignity.'),
+    );
+    foreach ($sv_defaults as $i => $d) {
+        $add_hc($wp_customize, "amyseden_hc_sv{$i}_icon",  "Service {$i} — Icon Slug",  $d[0], 'text',     'amyseden_hc_sv');
+        $add_hc($wp_customize, "amyseden_hc_sv{$i}_title", "Service {$i} — Title",      $d[1], 'text',     'amyseden_hc_sv');
+        $add_hc($wp_customize, "amyseden_hc_sv{$i}_desc",  "Service {$i} — Description",$d[2], 'textarea', 'amyseden_hc_sv');
+    }
+
+    // Gallery (8 photos with captions)
+    $wp_customize->add_section('amyseden_hc_gal', array('title' => __('Gallery Section', 'amyseden'), 'panel' => 'amyseden_home_care'));
+    $add_hc($wp_customize, 'amyseden_hc_gal_label',    'Label',    'Care in Action', 'text', 'amyseden_hc_gal');
+    $add_hc($wp_customize, 'amyseden_hc_gal_heading',  'Heading',  "See the Amy's Eden Difference", 'text', 'amyseden_hc_gal');
+    $add_hc($wp_customize, 'amyseden_hc_gal_subtitle', 'Subtitle', 'A glimpse into the compassionate, hands-on care our team provides every day.', 'textarea', 'amyseden_hc_gal');
+    $gal_defs_c = array(
+        1 => array('https://amyseden.com/wp-content/uploads/2025/06/In-Home-Care-Amys-Eden.webp', 'Personalized in-home care'),
+        2 => array('https://amyseden.com/wp-content/uploads/2025/01/1.jpg',                        'Building meaningful connections'),
+        3 => array('https://amyseden.com/wp-content/uploads/2025/01/2.jpg',                        'Compassionate daily support'),
+        4 => array('https://amyseden.com/wp-content/uploads/2024/12/home-care_1.png',              'Comfort of home, quality of care'),
+        5 => array('https://amyseden.com/wp-content/uploads/2025/06/in-home-care-2.webp',          'One-on-one personal attention'),
+        6 => array('https://amyseden.com/wp-content/uploads/2024/03/word-image-47518-3.jpeg',      'Engaging activities every day'),
+        7 => array('https://amyseden.com/wp-content/uploads/2025/06/Untitled-design-23-1.webp',    'Warmth and dignity always'),
+        8 => array('https://amyseden.com/wp-content/uploads/2023/08/pillr-page-image-1-web.png',   'Professional caregiving team'),
+    );
+    foreach ($gal_defs_c as $i => $d) {
+        $add_hc($wp_customize, "amyseden_hc_gal{$i}_img", "Photo {$i} — Image",  $d[0], 'image', 'amyseden_hc_gal');
+        $add_hc($wp_customize, "amyseden_hc_gal{$i}_cap", "Photo {$i} — Caption",$d[1], 'text',  'amyseden_hc_gal');
+    }
+
+    // Cross-sell section
+    $wp_customize->add_section('amyseden_hc_cs', array('title' => __('Cross-Sell (Two-Resident Home)', 'amyseden'), 'panel' => 'amyseden_home_care'));
+    $add_hc($wp_customize, 'amyseden_hc_cs_badge',    'Badge Text',  'When Needs Change', 'text', 'amyseden_hc_cs');
+    $add_hc($wp_customize, 'amyseden_hc_cs_heading',  'Heading',     "When Home Care Isn't Enough", 'text', 'amyseden_hc_cs');
+    $add_hc($wp_customize, 'amyseden_hc_cs_p1',       'Paragraph 1', 'When 24-hour in-home care becomes too costly or complex, our Two-Resident Home™ provides the same personal attention at a fraction of the cost — in a beautiful, licensed home setting.', 'textarea', 'amyseden_hc_cs');
+    $add_hc($wp_customize, 'amyseden_hc_cs_p2',       'Paragraph 2', "Our signature Two-Resident Home™ model means just two residents share one dedicated caregiver in a real home — not a facility. It's the best of both worlds: professional 24/7 care with the warmth of home.", 'textarea', 'amyseden_hc_cs');
+    $add_hc($wp_customize, 'amyseden_hc_cs_cta_text', 'CTA Button Text', 'Explore Our Two-Resident Homes →', 'text', 'amyseden_hc_cs');
+    $add_hc($wp_customize, 'amyseden_hc_cs_cta_url',  'CTA Button URL',  '/assisted-living/', 'text', 'amyseden_hc_cs');
+    $cs_stats_def = array(
+        1 => array('2:1',  'Resident-to-Caregiver'),
+        2 => array('24/7', 'Dedicated Caregiver'),
+        3 => array('12',   'Licensed Homes'),
+    );
+    foreach ($cs_stats_def as $i => $d) {
+        $add_hc($wp_customize, "amyseden_hc_cs_stat{$i}_number", "Stat {$i} — Number", $d[0], 'text', 'amyseden_hc_cs');
+        $add_hc($wp_customize, "amyseden_hc_cs_stat{$i}_label",  "Stat {$i} — Label",  $d[1], 'text', 'amyseden_hc_cs');
+    }
+    $cs_gal_def = array(
+        'https://amyseden.com/wp-content/uploads/2025/05/1.webp',  'https://amyseden.com/wp-content/uploads/2025/05/2.webp',
+        'https://amyseden.com/wp-content/uploads/2025/05/3.webp',  'https://amyseden.com/wp-content/uploads/2025/05/4.webp',
+        'https://amyseden.com/wp-content/uploads/2025/05/5.webp',  'https://amyseden.com/wp-content/uploads/2025/05/6.webp',
+        'https://amyseden.com/wp-content/uploads/2025/05/7.webp',  'https://amyseden.com/wp-content/uploads/2025/09/10-1.webp',
+        'https://amyseden.com/wp-content/uploads/2025/09/11.webp', 'https://amyseden.com/wp-content/uploads/2025/09/12.webp',
+        'https://amyseden.com/wp-content/uploads/2025/05/8.webp',  'https://amyseden.com/wp-content/uploads/2025/05/9.webp',
+    );
+    foreach ($cs_gal_def as $i => $url) {
+        $n = $i + 1;
+        $add_hc($wp_customize, "amyseden_hc_cs_img_{$n}", "Gallery Image {$n}", $url, 'image', 'amyseden_hc_cs');
+    }
+
+    // Testimonials
+    $wp_customize->add_section('amyseden_hc_tm', array('title' => __('Testimonials', 'amyseden'), 'panel' => 'amyseden_home_care'));
+    $add_hc($wp_customize, 'amyseden_hc_tm_label',    'Label',    'Testimonials', 'text', 'amyseden_hc_tm');
+    $add_hc($wp_customize, 'amyseden_hc_tm_heading',  'Heading',  "Families Trust Amy's Eden", 'text', 'amyseden_hc_tm');
+    $add_hc($wp_customize, 'amyseden_hc_tm_subtitle', 'Subtitle', "Hear from families who have experienced the Amy's Eden difference firsthand.", 'textarea', 'amyseden_hc_tm');
+    $add_hc($wp_customize, 'amyseden_hc_tm_photo',    'Side Photo', 'https://amyseden.com/wp-content/uploads/2025/01/1.jpg', 'image', 'amyseden_hc_tm');
+    $tm_defaults = array(
+        1 => array("The caregivers at Amy's Eden treat my mother like she's their own family. The level of personal attention is something we could never find at a large facility.", 'Sarah M.', 'Daughter of Resident · Reno, NV'),
+        2 => array("After my father's surgery, Amy's Eden provided incredible in-home care during his recovery. Professional, punctual, and genuinely caring. We couldn't ask for more.", 'Michael T.', 'Son of Client · Carson City, NV'),
+        3 => array('We started with home care and eventually moved Mom to one of their Two-Resident Homes. The transition was seamless because we already knew and trusted the team.', 'Jennifer L.', 'Daughter of Resident · Reno, NV'),
+    );
+    foreach ($tm_defaults as $i => $d) {
+        $add_hc($wp_customize, "amyseden_hc_tm{$i}_quote",  "Testimonial {$i} — Quote",  $d[0], 'textarea', 'amyseden_hc_tm');
+        $add_hc($wp_customize, "amyseden_hc_tm{$i}_author", "Testimonial {$i} — Author", $d[1], 'text',     'amyseden_hc_tm');
+        $add_hc($wp_customize, "amyseden_hc_tm{$i}_role",   "Testimonial {$i} — Role",   $d[2], 'text',     'amyseden_hc_tm');
+    }
+
+    // Process (3 steps + 3 photos)
+    $wp_customize->add_section('amyseden_hc_pr', array('title' => __('Getting Started (Process)', 'amyseden'), 'panel' => 'amyseden_home_care'));
+    $add_hc($wp_customize, 'amyseden_hc_pr_label',    'Label',    'Getting Started', 'text', 'amyseden_hc_pr');
+    $add_hc($wp_customize, 'amyseden_hc_pr_heading',  'Heading',  'Three Simple Steps', 'text', 'amyseden_hc_pr');
+    $add_hc($wp_customize, 'amyseden_hc_pr_subtitle', 'Subtitle', "Beginning care with Amy's Eden is easy. We guide you through every step with compassion and clarity.", 'textarea', 'amyseden_hc_pr');
+    $pr_photos_def = array(
+        'https://amyseden.com/wp-content/uploads/2025/06/in-home-care-2.webp',
+        'https://amyseden.com/wp-content/uploads/2024/03/word-image-47518-3.jpeg',
+        'https://amyseden.com/wp-content/uploads/2025/01/2.jpg',
+    );
+    for ($i = 1; $i <= 3; $i++) {
+        $add_hc($wp_customize, "amyseden_hc_pr_photo{$i}", "Process Photo {$i}", $pr_photos_def[$i - 1], 'image', 'amyseden_hc_pr');
+    }
+    $pr_steps_def = array(
+        1 => array('Call Us',          "Reach out by phone or through our contact form. We'll listen to your needs and answer all your questions."),
+        2 => array('Free Assessment',  "We conduct a comprehensive in-home assessment to understand your loved one's needs, preferences, and goals."),
+        3 => array('Care Begins',      'Your personalized care plan is created and matched with the ideal caregiver. Compassionate care starts right away.'),
+    );
+    foreach ($pr_steps_def as $i => $d) {
+        $add_hc($wp_customize, "amyseden_hc_pr_step{$i}_title", "Step {$i} — Title", $d[0], 'text',     'amyseden_hc_pr');
+        $add_hc($wp_customize, "amyseden_hc_pr_step{$i}_desc",  "Step {$i} — Body",  $d[1], 'textarea', 'amyseden_hc_pr');
+    }
+
+    // Contact
+    $wp_customize->add_section('amyseden_hc_con', array('title' => __('Contact Section', 'amyseden'), 'panel' => 'amyseden_home_care'));
+    $add_hc($wp_customize, 'amyseden_hc_con_label',         'Label',          'Contact Us', 'text', 'amyseden_hc_con');
+    $add_hc($wp_customize, 'amyseden_hc_con_heading',       'Heading',        'Start the Conversation', 'text', 'amyseden_hc_con');
+    $add_hc($wp_customize, 'amyseden_hc_con_subtitle',      'Subtitle',       "Ready to explore home care for your loved one? Fill out the form below and we'll reach out within 24 hours.", 'textarea', 'amyseden_hc_con');
+    $add_hc($wp_customize, 'amyseden_hc_con_info_heading',  'Info Heading',   "We're Here to Help", 'text', 'amyseden_hc_con');
+    $add_hc($wp_customize, 'amyseden_hc_con_info_p',        'Info Paragraph', "Whether you need a few hours of help each week or full-time care, we'll work with you to find the perfect solution for your family.", 'textarea', 'amyseden_hc_con');
+    $add_hc($wp_customize, 'amyseden_hc_con_image',         'Side Image',     'https://amyseden.com/wp-content/uploads/2024/12/home-care_1.png', 'image', 'amyseden_hc_con');
+
+    // FAQ (7 Q&A)
+    $wp_customize->add_section('amyseden_hc_faq', array('title' => __('FAQ Section', 'amyseden'), 'panel' => 'amyseden_home_care'));
+    $add_hc($wp_customize, 'amyseden_hc_faq_label',    'Label',    'Common Questions', 'text', 'amyseden_hc_faq');
+    $add_hc($wp_customize, 'amyseden_hc_faq_heading',  'Heading',  'Frequently Asked Questions', 'text', 'amyseden_hc_faq');
+    $add_hc($wp_customize, 'amyseden_hc_faq_subtitle', 'Subtitle', 'Find answers to common questions about our in-home care services.', 'textarea', 'amyseden_hc_faq');
+    $add_hc($wp_customize, 'amyseden_hc_faq_photo',    'Side Photo', 'https://amyseden.com/wp-content/uploads/2025/01/2.jpg', 'image', 'amyseden_hc_faq');
+    $faq_hc_defs = array(
+        1 => array('What home care services do you offer?', 'We offer a comprehensive range of in-home care services including personal care (bathing, grooming, mobility assistance), companion care, medication management, meal preparation, light housekeeping, transportation, respite care, post-surgery support, chronic disease management, and hospice support care.'),
+        2 => array('How are your caregivers selected and trained?', 'Every caregiver undergoes a thorough background check, reference verification, and skills assessment. They receive ongoing training in senior care best practices, safety protocols, and specialized areas like dementia care. We handpick caregivers who demonstrate not just skill, but genuine compassion.'),
+        3 => array('Can I choose my schedule (hourly, daily, overnight)?', 'Absolutely. We offer fully flexible scheduling to meet your needs — from a few hours per week to full 24/7 live-in care. Whether you need morning assistance, overnight supervision, or weekend coverage, we\'ll create a schedule that works for your family.'),
+        4 => array("What if my loved one's needs change over time?", 'Care plans are living documents that evolve with your loved one. We conduct regular reassessments and adjust services as needs change. If full-time care becomes necessary, we can also facilitate a seamless transition to one of our Two-Resident Homes™.'),
+        5 => array('Do you serve both Reno and Carson City?', 'Yes, we provide in-home care services throughout Reno and Carson City, Nevada. With 12 licensed homes and a large team of caregivers across both cities, we can serve families in the greater Northern Nevada area.'),
+        6 => array("What's the difference between home care and your Two-Resident Homes?", "Home care means a caregiver comes to your loved one's home on a scheduled basis. Our Two-Resident Home™ is our signature assisted living model where just two residents live in a licensed home with a dedicated 24/7 caregiver. It's ideal when full-time in-home care becomes too expensive or when more intensive, round-the-clock support is needed."),
+        7 => array('How do I get started?', 'Simply call us or fill out the contact form on this page. We\'ll schedule a free in-home assessment, discuss your needs, and create a personalized care plan. Most families can begin care within days of the initial consultation.'),
+    );
+    foreach ($faq_hc_defs as $i => $d) {
+        $add_hc($wp_customize, "amyseden_hc_faq{$i}_q", "FAQ {$i} — Question", $d[0], 'text',     'amyseden_hc_faq');
+        $add_hc($wp_customize, "amyseden_hc_faq{$i}_a", "FAQ {$i} — Answer",   $d[1], 'textarea', 'amyseden_hc_faq');
+    }
+
+    // Final CTA
+    $wp_customize->add_section('amyseden_hc_fc', array('title' => __('Final CTA', 'amyseden'), 'panel' => 'amyseden_home_care'));
+    $add_hc($wp_customize, 'amyseden_hc_fc_label',    'Label',    'Take the First Step', 'text', 'amyseden_hc_fc');
+    $add_hc($wp_customize, 'amyseden_hc_fc_heading',  'Heading',  'Your Loved One Deserves Exceptional Care', 'text', 'amyseden_hc_fc');
+    $add_hc($wp_customize, 'amyseden_hc_fc_subtitle', 'Subtitle', "Let's discuss how Amy's Eden can provide the personalized, premium home care your family needs.", 'textarea', 'amyseden_hc_fc');
+    $add_hc($wp_customize, 'amyseden_hc_fc_cta1',     'CTA Text', 'Request a Free Consultation', 'text', 'amyseden_hc_fc');
+    $add_hc($wp_customize, 'amyseden_hc_fc_bg',       'Background Image', 'https://amyseden.com/wp-content/uploads/2025/04/Hero.png', 'image', 'amyseden_hc_fc');
 
     // ============================================================
     // 7. ABOUT PAGE
