@@ -33,10 +33,10 @@ function amyseden_scripts() {
     wp_enqueue_style('amyseden-google-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap', array(), null);
 
     // Main theme CSS
-    wp_enqueue_style('amyseden-main', get_template_directory_uri() . '/assets/css/main.css', array(), '1.6.1');
+    wp_enqueue_style('amyseden-main', get_template_directory_uri() . '/assets/css/main.css', array(), '1.6.2');
 
     // Main theme JS (deferred)
-    wp_enqueue_script('amyseden-main', get_template_directory_uri() . '/assets/js/main.js', array(), '1.6.1', true);
+    wp_enqueue_script('amyseden-main', get_template_directory_uri() . '/assets/js/main.js', array(), '1.6.2', true);
 
     // Pass data to JS (includes AJAX nonce for contact form)
     wp_localize_script('amyseden-main', 'amyseden', array(

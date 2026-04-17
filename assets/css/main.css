@@ -2206,29 +2206,9 @@ body:has(.announcement-bar) .hero {
     object-fit: cover;
 }
 
-.pricing-features {
-    list-style: none;
-    margin-top: 32px;
-}
-
-.pricing-features li {
-    padding: 12px 0;
-    padding-left: 32px;
-    position: relative;
-    border-bottom: 1px solid var(--border-color);
-    font-size: 0.95rem;
-}
-
+/* Pricing features — base layout. Checkmark is rendered as inline SVG
+   via amyseden_icon(). Styles consolidated in section 34 below. */
 .pricing-features li:last-child { border-bottom: none; }
-
-.pricing-features li::before {
-    content: '\2713';
-    position: absolute;
-    left: 0;
-    color: var(--coral);
-    font-weight: 700;
-    font-size: 1.1rem;
-}
 
 /* --- Cross-sell section (home-care) --- */
 .cross-sell-wrapper {
@@ -2734,25 +2714,8 @@ body:has(.announcement-bar) .hero {
     line-height: 1.8;
 }
 
-.tab-features {
-    list-style: none;
-    margin-top: 24px;
-}
-
-.tab-features li {
-    padding: 8px 0;
-    padding-left: 28px;
-    position: relative;
-    font-size: 0.95rem;
-}
-
-.tab-features li::before {
-    content: '\2713';
-    position: absolute;
-    left: 0;
-    color: var(--coral);
-    font-weight: 700;
-}
+/* Tab features — checkmark rendered as inline SVG via amyseden_icon().
+   Styles consolidated in section 34 below. */
 
 
 /* ==========================================================================
@@ -5498,11 +5461,42 @@ body:has(.announcement-bar) .hero {
     border: 3px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Icon utility class */
+/* Icon utility class — default size matches surrounding text; override per-context */
 .amyseden-icon {
     display: inline-block;
     vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
 }
+
+/* Icons inside buttons — slightly smaller than text, with consistent spacing */
+.btn .amyseden-icon,
+.btn-primary .amyseden-icon,
+.btn-secondary .amyseden-icon,
+.btn-outline .amyseden-icon,
+.btn-outline-dark .amyseden-icon,
+.btn-outline--light .amyseden-icon {
+    width: 1.05em;
+    height: 1.05em;
+}
+
+/* Prevent button text (phone numbers especially) from wrapping mid-word */
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-outline,
+.btn-outline-dark {
+    white-space: nowrap;
+}
+
+/* Nav phone icon */
+.nav__phone .amyseden-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Footer social icons keep existing sizes via .footer__social svg rule */
 
 /* --- Home Care --- */
 .page-home-care .hero {
