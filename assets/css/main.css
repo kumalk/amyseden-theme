@@ -4185,21 +4185,9 @@ body:has(.announcement-bar) .hero {
     z-index: 1;
 }
 
-.final-cta-bg {
-    position: absolute;
-    inset: 0;
-    opacity: 0.08;
-    z-index: 0;
-}
-
-.final-cta-bg img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.final-cta__heading,
-.final-cta h2 {
+/* .final-cta-bg and .final-cta h2 base styles handled in section 44 below.
+   Legacy opacity: 0.08 removed — it was making the background image invisible. */
+.final-cta__heading {
     font-size: clamp(2rem, 4.5vw, 3.5rem);
     margin-bottom: 20px;
     color: var(--text-primary);
@@ -5837,6 +5825,9 @@ body:has(.announcement-bar) .hero {
     padding: 72px 32px;
     border-radius: 24px;
     overflow: hidden;
+    /* Override legacy cream background so Hero image shows through */
+    background: #2A2A3C;
+    border: none;
 }
 
 .final-cta .final-cta-bg {
@@ -5848,6 +5839,7 @@ body:has(.announcement-bar) .hero {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    opacity: 1;
 }
 
 /* Dark gradient overlay on top of the background image */
